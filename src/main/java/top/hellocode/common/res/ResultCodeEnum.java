@@ -15,10 +15,10 @@ public enum ResultCodeEnum {
     NOT_FOUND(404, "数据找不到"),
 
     FAILED(500, "操作失败，请稍后再试"),
+    EMAIL_SEND_FAILED(5001, "邮件发送失败，请稍后再试"),
+    LOGIN_FAILED(4011, "登录失败，用户名或密码不正确"),
 
-    DOUBLE_USERNAME(400,"用户名已经存在");
-
-    ;
+    DOUBLE_USERNAME(403,"用户名已经存在");
 
     private Integer code;
 

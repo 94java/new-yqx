@@ -51,3 +51,8 @@ mybatis-plus:
 security:
   salt: hellocode66
   salt-index: 3
+# email 配置
+yqx:
+  email:
+    username: 1242306285@qq.com
+    password: rcyfhxmuoadiibde

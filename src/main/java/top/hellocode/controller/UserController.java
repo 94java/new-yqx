@@ -6,15 +6,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import top.hellocode.common.res.Result;
 import top.hellocode.entity.User;
-import top.hellocode.entity.dto.UserDto;
+import top.hellocode.entity.dto.LoginDto;
+import top.hellocode.entity.dto.UserSearchDto;
+import top.hellocode.entity.vo.UserVo;
 import top.hellocode.service.IUserService;
-
-import java.util.List;
 
 /**
  * <p>
@@ -34,8 +35,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ApiOperation("获取用户详细信息")
-    public Result<User> info(@PathVariable("id")Long id){
-        User user = userService.getUserInfoById(id);
+    public Result<UserVo> info(@PathVariable("id")Long id){
+        UserVo user = userService.getUserInfoById(id);
         return Result.success(user);
     }
 
@@ -51,7 +52,7 @@ public class UserController {
     public Result<Page> list(
             @PathVariable("pageNum")Integer pageNum,
             @PathVariable("pageSize")Integer pageSize,
-            @RequestBody UserDto user){
+            @RequestBody UserSearchDto user){
         // 默认值设置
         pageNum = ObjectUtil.isNotNull(pageNum) ? pageNum : 1;
         pageSize = ObjectUtil.isNotNull(pageSize) ? pageSize : 10;
@@ -62,22 +63,37 @@ public class UserController {
 
     @PostMapping
     @ApiOperation("用户注册")
-    public Result register(@RequestBody User user){
+    public Result register(@RequestBody LoginDto user){
         userService.register(user);
         return Result.success();
     }
 
     @PostMapping("/login")
     @ApiOperation("用户登录")
-    public Result login(@RequestBody User user){
-        // TODO 用户登录
+    public Result<String> login(@RequestBody LoginDto loginDto){
+        String token = null;
+        // 账号登录
+        if(StringUtils.isNotBlank(loginDto.getUsername())){
+            token = userService.loginByUsername(loginDto);
+        }else if(StringUtils.isNotBlank(loginDto.getEmail())){
+            // 快捷登录
+            token = userService.loginByEmail(loginDto);
+        }
+
+        return Result.success(token);
+    }
+
+    @PostMapping("/code")
+    @ApiOperation("验证码发送")
+    public Result<String> sendCode(@RequestBody LoginDto loginDto){
+        userService.sendEmailCode(loginDto);
         return Result.success();
     }
 
     @PostMapping("/logout")
     @ApiOperation("用户退出")
-    public Result logout(){
-        // TODO 用户退出
+    public Result logout(@RequestHeader("token") String token){
+        userService.logout(token);
         return Result.success();
     }
 

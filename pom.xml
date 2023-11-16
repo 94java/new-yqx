@@ -111,6 +111,13 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+
+        <!--邮件发送-->
+        <dependency>
+            <groupId>io.github.biezhi</groupId>
+            <artifactId>oh-my-email</artifactId>
+            <version>0.0.4</version>
+        </dependency>
     </dependencies>
 
     <repositories>
