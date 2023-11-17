@@ -1,6 +1,7 @@
 package cc.jiusi.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
@@ -43,6 +44,7 @@ public class Article implements Serializable {
     private String content;
 
     @ApiModelProperty(value = "类型（原创、转载、翻译）")
+    @TableField(value = "`type`")
     private String type;
 
     @ApiModelProperty(value = "摘要")
@@ -80,6 +82,7 @@ public class Article implements Serializable {
     private Integer stars;
 
     @ApiModelProperty(value = "评论量")
+    @TableField(value = "`comments`")
     private Integer comments;
 
 

@@ -1,6 +1,7 @@
 package cc.jiusi.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
@@ -21,7 +22,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="Category对象", description="")
+@ApiModel(value="分类对象", description="")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +32,7 @@ public class Category implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "分类名")
+    @TableField(value = "`name`")
     private String name;
 
     @ApiModelProperty(value = "缩略名")
@@ -40,6 +42,7 @@ public class Category implements Serializable {
     private Long parentId;
 
     @ApiModelProperty(value = "排序（越小越前）")
+    @TableField(value = "`order`")
     private Integer order;
 
     @ApiModelProperty(value = "创建者")

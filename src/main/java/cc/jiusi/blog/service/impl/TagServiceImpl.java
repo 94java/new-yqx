@@ -49,7 +49,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
         // 查询标签详情
         Tag tag = tagMapper.selectById(id);
         if (tag == null) {
-            return null;
+            throw new GlobalException(ResultCodeEnum.NOT_FOUND);
         }
         // 封装 vo
         TagVo tagVo = new TagVo();
@@ -156,8 +156,10 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
         // 重复性校验
         LambdaQueryWrapper<Tag> wrapper = Wrappers.<Tag>lambdaQuery()
                .eq(Tag::getName, tagVo.getName())
+                .ne(Tag::getId,tagVo.getId())
                 .or()
-                .eq(Tag::getShortName, tagVo.getShortName());
+                .eq(Tag::getShortName, tagVo.getShortName())
+                .ne(Tag::getId,tagVo.getId());
         Integer count = tagMapper.selectCount(wrapper);
         if(count > 0){
             throw new GlobalException(ResultCodeEnum.DOUBLE_PARAMS, "标签名或缩略名已存在");

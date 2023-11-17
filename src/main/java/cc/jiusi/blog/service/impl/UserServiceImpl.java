@@ -246,7 +246,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     private UserVo getSafeUser(User user) {
         if (user == null) {
-            return null;
+            throw new GlobalException(ResultCodeEnum.NOT_FOUND);
         }
         // 信息脱敏
         user.setPassword(DesensitizedUtil.password(user.getPassword()));

@@ -1,6 +1,7 @@
 package cc.jiusi.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
@@ -31,6 +32,7 @@ public class Tag implements Serializable {
     private Long id;
 
     @ApiModelProperty(value = "标签名")
+    @TableField(value = "`name`")
     private String name;
 
     @ApiModelProperty(value = "创建者")
