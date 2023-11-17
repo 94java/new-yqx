@@ -1,4 +1,4 @@
-package top.hellocode.common;
+package top.hellocode.common.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,16 +1,11 @@
 package top.hellocode.devdemo;
 
 import io.github.biezhi.ome.OhMyEmail;
-import io.github.biezhi.ome.SendMailException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import top.hellocode.common.PasswordEncoder;
-
-import javax.mail.MessagingException;
-import java.security.GeneralSecurityException;
-import java.util.Properties;
+import top.hellocode.common.utils.PasswordEncoder;
 
 import static io.github.biezhi.ome.OhMyEmail.SMTP_QQ;
 

@@ -4,14 +4,13 @@ import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.github.biezhi.ome.OhMyEmail;
 import io.github.biezhi.ome.SendMailException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import top.hellocode.common.PasswordEncoder;
+import top.hellocode.common.utils.PasswordEncoder;
 import top.hellocode.common.constants.RedisConstants;
 import top.hellocode.common.constants.UserConstants;
 import top.hellocode.common.res.ResultCodeEnum;
@@ -29,8 +28,6 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import static io.github.biezhi.ome.OhMyEmail.SMTP_QQ;
 
 /**
  * <p>
@@ -100,7 +97,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setUsername(null);
         user.setDelFlag(null);
         // 如果修改密码，对密码进行加密
-        if(StringUtils.isNotEmpty(user.getPassword())){
+        if (StringUtils.isNotEmpty(user.getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         // 修改
@@ -118,26 +115,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public String loginByUsername(LoginDto loginDto) {
         // 参数校验
-        if(StringUtils.isEmpty(loginDto.getUsername()) || StringUtils.isEmpty(loginDto.getPassword())){
+        if (StringUtils.isEmpty(loginDto.getUsername()) || StringUtils.isEmpty(loginDto.getPassword())) {
             throw new GlobalException(ResultCodeEnum.PARAMS_FAILED);
         }
         // 查询用户信息
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getUsername, loginDto.getUsername());
         User user = userMapper.selectOne(wrapper);
-        if(user == null){
+        if (user == null) {
             // 用户不存在
-            throw new GlobalException(ResultCodeEnum.NOT_FOUND,"用户不存在");
+            throw new GlobalException(ResultCodeEnum.NOT_FOUND, "用户不存在");
         }
         boolean match = passwordEncoder.match(loginDto.getPassword(), user.getPassword());
-        if(!match){
+        if (!match) {
             throw new GlobalException(ResultCodeEnum.LOGIN_FAILED);
         }
         // 生成token，并保存至redis
         String token = UUID.randomUUID().toString();
         // hash 结构-》  token：userId
         // 设置hash结构的某一个field有效期30分钟
-        redisTemplate.opsForValue().set(RedisConstants.LOGIN_TOKEN + token,user.getId().toString(),30, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(RedisConstants.LOGIN_TOKEN + token, user.getId().toString(), 30, TimeUnit.MINUTES);
         return token;
     }
 
@@ -152,20 +149,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public String loginByEmail(LoginDto loginDto) {
         // 参数校验
-        if(StringUtils.isEmpty(loginDto.getEmail()) || StringUtils.isEmpty(loginDto.getCode())){
+        if (StringUtils.isEmpty(loginDto.getEmail()) || StringUtils.isEmpty(loginDto.getCode())) {
             throw new GlobalException(ResultCodeEnum.PARAMS_FAILED);
         }
         // 验证码校验
         String code = redisTemplate.opsForValue().get(RedisConstants.EMAIL_CODE + loginDto.getEmail());
-        if(StringUtils.isEmpty(code) || !code.equals(loginDto.getCode())){
-            throw new GlobalException(ResultCodeEnum.LOGIN_FAILED,"邮箱或验证码不正确");
+        if (StringUtils.isEmpty(code) || !code.equals(loginDto.getCode())) {
+            throw new GlobalException(ResultCodeEnum.LOGIN_FAILED, "邮箱或验证码不正确");
         }
         // 查询用户信息
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getEmail, loginDto.getEmail());
         User user = userMapper.selectOne(wrapper);
 
-        if(user == null){
+        if (user == null) {
             // 用户不存在，创建新用户
             user = new User();
             user.setUsername(loginDto.getEmail());
@@ -176,7 +173,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         String token = UUID.randomUUID().toString();
         // hash 结构-》  token：userId
         // 设置hash结构的某一个field有效期30分钟
-        redisTemplate.opsForValue().set(RedisConstants.LOGIN_TOKEN + token,user.getId().toString(),30, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(RedisConstants.LOGIN_TOKEN + token, user.getId().toString(), 30, TimeUnit.MINUTES);
 
         return token;
     }
@@ -192,19 +189,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public void sendEmailCode(LoginDto loginDto) {
         // 参数校验
-        if(StringUtils.isEmpty(loginDto.getEmail())){
+        if (StringUtils.isEmpty(loginDto.getEmail())) {
             throw new GlobalException(ResultCodeEnum.PARAMS_FAILED);
         }
         // 发送邮箱
         String code = RandomStringUtils.randomNumeric(6);
-        try {
-            EmailUtils.sendEmailCode(loginDto.getEmail(),code);
-            String etst = RedisConstants.EMAIL_CODE + loginDto.getEmail();
-            // 保存验证码至redis(5分钟有效)
-            redisTemplate.opsForValue().set(RedisConstants.EMAIL_CODE + loginDto.getEmail(),code,5, TimeUnit.MINUTES);
-        } catch (SendMailException e) {
-            throw new GlobalException(ResultCodeEnum.EMAIL_SEND_FAILED);
-        }
+        // 开启线程验证码异步发送，防止阻塞
+        new Thread(() -> {
+            try {
+                EmailUtils.sendEmailCode(loginDto.getEmail(), code);
+                // 保存验证码至redis(5分钟有效)
+                redisTemplate.opsForValue().set(RedisConstants.EMAIL_CODE + loginDto.getEmail(), code, 5, TimeUnit.MINUTES);
+            } catch (SendMailException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     /**
@@ -248,29 +247,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return: 填充后的User对象
      * @description: 默认信息填充
      */
-    private User fillDefault(User user){
+    private User fillDefault(User user) {
         // 随机用户名
-        if(StringUtils.isEmpty(user.getNickname())){
+        if (StringUtils.isEmpty(user.getNickname())) {
             user.setNickname("yqx_" + RandomUtil.randomString(4));
         }
         // 默认性别
-        if(StringUtils.isEmpty(user.getSex())){
+        if (StringUtils.isEmpty(user.getSex())) {
             user.setSex(UserConstants.SEX_MAN);
         }
         // 默认头像
-        if(StringUtils.isEmpty(user.getAvatar())){
+        if (StringUtils.isEmpty(user.getAvatar())) {
             user.setAvatar(UserConstants.DEFAULT_AVATAR);
         }
         // 默认状态
-        if(StringUtils.isEmpty(user.getStatus())){
+        if (StringUtils.isEmpty(user.getStatus())) {
             user.setStatus(UserConstants.STATUS_OK);
         }
         // 默认逻辑删除标记
-        if(StringUtils.isEmpty(user.getDelFlag())){
+        if (StringUtils.isEmpty(user.getDelFlag())) {
             user.setDelFlag(UserConstants.DEL_NO);
         }
         // 默认密码
-        if(StringUtils.isEmpty(user.getPassword())){
+        if (StringUtils.isEmpty(user.getPassword())) {
             String pwd = RandomUtil.randomNumbers(6);
             user.setPassword(passwordEncoder.encode(pwd));
         }

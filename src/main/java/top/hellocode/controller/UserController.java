@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import top.hellocode.common.annotations.Authentication;
 import top.hellocode.common.res.Result;
 import top.hellocode.entity.User;
 import top.hellocode.entity.dto.LoginDto;
@@ -35,6 +36,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ApiOperation("获取用户详细信息")
+    @Authentication
     public Result<UserVo> info(@PathVariable("id")Long id){
         UserVo user = userService.getUserInfoById(id);
         return Result.success(user);
@@ -49,6 +51,7 @@ public class UserController {
     */
     @PostMapping("/{pageNum}/{pageSize}")
     @ApiOperation("分页获取用户")
+    @Authentication
     public Result<Page> list(
             @PathVariable("pageNum")Integer pageNum,
             @PathVariable("pageSize")Integer pageSize,
@@ -99,6 +102,7 @@ public class UserController {
 
     @PutMapping
     @ApiOperation("修改用户信息")
+    @Authentication
     public Result update(@RequestBody User user){
         userService.update(user);
         return Result.success();
@@ -106,6 +110,7 @@ public class UserController {
 
     @DeleteMapping
     @ApiOperation("删除用户信息")
+    @Authentication
     public Result delete(Long id){
         userService.removeById(id);
         return Result.success();

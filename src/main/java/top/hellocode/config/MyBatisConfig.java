@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import top.hellocode.common.utils.UserContext;
 
 import java.util.Date;
 
@@ -30,16 +31,14 @@ public class MyBatisConfig implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         metaObject.setValue("createTime", new Date());
-        // TODO 使用真实创建者ID替换此处
-        metaObject.setValue("createBy","1");
+        metaObject.setValue("createBy", UserContext.getUserId());
         metaObject.setValue("updateTime", new Date());
-        metaObject.setValue("updateBy","1");
+        metaObject.setValue("updateBy",UserContext.getUserId());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         metaObject.setValue("updateTime",new Date());
-        // TODO 使用真实修改者ID替换此处
-        metaObject.setValue("updateBy","1");
+        metaObject.setValue("updateBy",UserContext.getUserId());
     }
 }

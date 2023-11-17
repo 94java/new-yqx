@@ -9,7 +9,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     <!-- 定义日志文件名称 -->
     <property name="APP_NAME" value="hellocode-backend" />
     <!-- 定义日志文件的路径 -->
-    <property name="LOG_PATH" value="${user.home}/${APP_NAME}/logs" />
+    <property name="LOG_PATH" value="/${APP_NAME}/logs" />
     <!-- 定义日志的文件名 -->
     <property name="LOG_FILE" value="${LOG_PATH}/hellocode-backend.log" />
 
