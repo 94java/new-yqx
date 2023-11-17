@@ -1,9 +1,17 @@
-## SpringBoot项目脚手架（自用）
-目前已经集成：
+## 易启学社区系统
+
+### 项目简介
+
+易启学社区系统是一套基于Spring Boot的前后端分离的社区项目，使用技术：
 - SpringBoot
-- Knif4j
-- Slf4j日志
-- MyBatis
-- 代码生成器
-- 统一异常处理
-- 统一结果返回对象
+- Mybatis-Plus
+- Mysql
+- Redis
+- Minio
+- Thymeleaf
+- oh-my-email
+- hutools
+- knif4j
+- lombok
+
+> 具体文档待完善......
