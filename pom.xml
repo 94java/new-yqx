@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>top.hellocode</groupId>
-    <artifactId>boot-dev</artifactId>
+    <artifactId>jiusi-blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>boot-dev</name>
     <description>boot-dev</description>
@@ -117,6 +117,14 @@
             <groupId>io.github.biezhi</groupId>
             <artifactId>oh-my-email</artifactId>
             <version>0.0.4</version>
+        </dependency>
+
+
+        <!-- 汉字转拼音工具包 -->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
         </dependency>
     </dependencies>
 

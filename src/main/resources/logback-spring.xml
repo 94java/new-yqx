@@ -11,7 +11,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
     <!-- 定义日志文件的路径 -->
     <property name="LOG_PATH" value="/${APP_NAME}/logs" />
     <!-- 定义日志的文件名 -->
-    <property name="LOG_FILE" value="${LOG_PATH}/hellocode-backend.log" />
+    <property name="LOG_FILE" value="${LOG_PATH}/jiusi-backend.log" />
 
     <!-- 滚动记录日志，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
     <appender name="APPLICATION"

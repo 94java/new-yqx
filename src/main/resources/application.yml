@@ -35,7 +35,7 @@ logging:
 # mybatis配置
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: top.hellocode.entity
+  type-aliases-package: cc.jiusi.blog.entity
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -49,7 +49,7 @@ mybatis-plus:
 
 # 密码盐设置
 security:
-  salt: hellocode66
+  salt: jiusi66
   salt-index: 3
 # email 配置
 yqx:
