@@ -1,14 +1,27 @@
 package cc.jiusi.blog.devdemo;
 
 import cc.jiusi.blog.common.res.ResultCodeEnum;
+import cc.jiusi.blog.common.utils.MinioUtils;
 import cc.jiusi.blog.common.utils.PasswordEncoder;
 import cc.jiusi.blog.exception.GlobalException;
 import cn.hutool.extra.pinyin.PinyinUtil;
 import io.github.biezhi.ome.OhMyEmail;
+import io.minio.errors.*;
+import io.minio.messages.Bucket;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+import java.util.List;
 
 import static io.github.biezhi.ome.OhMyEmail.SMTP_QQ;
 
@@ -67,5 +80,21 @@ class DevDemoApplicationTests {
         }
 
         System.out.println(sb.toString());
+    }
+
+    /**
+     * @author: 九思.
+     * @date: 2023/11/19 16:04
+     * @param:
+     * @return: void
+     * @description: 测试 Minio
+     */
+    @Test
+    public void testMinio(@Autowired MinioUtils minioUtils) throws IOException, ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\lihao\\Pictures\\Camera Roll\\qq.jpg");
+        boolean bs = minioUtils.putObject("94blog", "头像.jpg", fileInputStream, "image/jpg");
+        System.out.println(bs);
+        // 获取对象访问路径
+        System.out.println(minioUtils.getObjectUrl("94blog","qq.jpg"));
     }
 }
