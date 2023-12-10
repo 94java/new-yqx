@@ -1,6 +1,6 @@
 package cc.jiusi.blog.mapper;
 
-import cc.jiusi.blog.entity.Role;
+import cc.jiusi.blog.entity.po.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

@@ -3,7 +3,7 @@
 <mapper namespace="cc.jiusi.blog.mapper.RoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.Role">
+    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.po.Role">
         <id column="id" property="id" />
         <result column="role_name" property="roleName" />
         <result column="remark" property="remark" />

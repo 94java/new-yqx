@@ -1,5 +1,6 @@
-package cc.jiusi.blog.entity;
+package cc.jiusi.blog.entity.po;
 
+import cc.jiusi.blog.entity.BaseBean;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -21,35 +22,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="Role对象", description="")
-public class Role implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-
+public class Role extends BaseBean {
     @ApiModelProperty(value = "角色名")
     private String roleName;
 
     @ApiModelProperty(value = "备注")
     private String remark;
-
-    @ApiModelProperty(value = "创建者")
-    private String createBy;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "更新者")
-    private String updateBy;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
-
-    @ApiModelProperty(value = "删除标志")
-    @TableLogic
-    private String delFlag;
-
 
 }

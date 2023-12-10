@@ -1,6 +1,6 @@
 package cc.jiusi.blog.service;
 
-import cc.jiusi.blog.entity.Category;
+import cc.jiusi.blog.entity.po.Category;
 import cc.jiusi.blog.entity.vo.CategoryVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;

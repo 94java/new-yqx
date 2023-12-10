@@ -17,12 +17,24 @@ import java.util.Date;
 @Data
 public class TagVo {
     @ApiModelProperty(value = "主键")
-    private Long id;
+    private String id;
 
     @ApiModelProperty(value = "标签名")
     private String name;
 
     @ApiModelProperty(value = "缩略名")
     private String shortName;
+
+    @ApiModelProperty(value = "创建者")
+    private String createBy;
+
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
+
+    @ApiModelProperty(value = "更新者")
+    private String updateBy;
+
+    @ApiModelProperty(value = "更新时间")
+    private Date updateTime;
 
 }

@@ -1,6 +1,6 @@
 package cc.jiusi.blog.mapper;
 
-import cc.jiusi.blog.entity.User;
+import cc.jiusi.blog.entity.po.User;
 import org.apache.ibatis.annotations.Mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

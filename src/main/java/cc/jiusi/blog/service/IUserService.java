@@ -1,6 +1,6 @@
 package cc.jiusi.blog.service;
 
-import cc.jiusi.blog.entity.User;
+import cc.jiusi.blog.entity.po.User;
 import cc.jiusi.blog.entity.dto.LoginDto;
 import cc.jiusi.blog.entity.vo.UserVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

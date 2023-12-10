@@ -1,6 +1,6 @@
 package cc.jiusi.blog.mapper;
 
-import cc.jiusi.blog.entity.po.Tag;
+import cc.jiusi.blog.entity.po.Source;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author 九思.
- * @since 2023-11-17
+ * @since 2023-11-23
  */
-public interface TagMapper extends BaseMapper<Tag> {
+public interface SourceMapper extends BaseMapper<Source> {
 
 }

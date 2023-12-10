@@ -2,8 +2,10 @@ package cc.jiusi.blog.controller;
 
 
 import cc.jiusi.blog.common.annotations.Authentication;
+import cc.jiusi.blog.common.constants.SysConstants;
 import cc.jiusi.blog.common.res.Result;
-import cc.jiusi.blog.entity.User;
+import cc.jiusi.blog.common.utils.UserContext;
+import cc.jiusi.blog.entity.po.User;
 import cc.jiusi.blog.entity.dto.LoginDto;
 import cc.jiusi.blog.entity.vo.UserVo;
 import cc.jiusi.blog.service.IUserService;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import cc.jiusi.blog.entity.dto.UserSearchDto;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -38,9 +42,18 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ApiOperation("获取用户详细信息")
-    @Authentication
+    // @Authentication
     public Result<UserVo> info(@PathVariable("id") Long id) {
         UserVo user = userService.getUserInfoById(id);
+        return Result.success(user);
+    }
+
+    @GetMapping("/currentUserInfo")
+    @ApiOperation("获取当前登录用户信息")
+    @Authentication
+    public Result<UserVo> currentUserInfo() {
+        Long userId = UserContext.getUserId();
+        UserVo user = userService.getUserInfoById(userId);
         return Result.success(user);
     }
 
@@ -75,7 +88,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation("用户登录")
-    public Result<String> login(@RequestBody LoginDto loginDto, HttpServletRequest request) {
+    public Result<Map> login(@RequestBody LoginDto loginDto, HttpServletRequest request) {
         String token = null;
         // 账号登录
         if (StringUtils.isNotBlank(loginDto.getUsername())) {
@@ -84,8 +97,11 @@ public class UserController {
             // 快捷登录
             token = userService.loginByEmail(loginDto, request);
         }
+        // 为方便前端操作，包装token返回
+        Map<String,String> res = new HashMap<>();
+        res.put("token",token);
 
-        return Result.success(token);
+        return Result.success(res);
     }
 
     @PostMapping("/code")
@@ -97,7 +113,7 @@ public class UserController {
 
     @PostMapping("/logout")
     @ApiOperation("用户退出")
-    public Result logout(@RequestHeader("token") String token) {
+    public Result logout(@RequestHeader(SysConstants.USER_TOKEN_HEADER) String token) {
         userService.logout(token);
         return Result.success();
     }

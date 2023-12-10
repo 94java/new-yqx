@@ -1,12 +1,16 @@
 package cc.jiusi.blog.config;
 
+import cc.jiusi.blog.entity.vo.UserVo;
+import cc.jiusi.blog.service.IUserService;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import cc.jiusi.blog.common.utils.UserContext;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 
@@ -19,6 +23,9 @@ import java.util.Date;
 
 @Configuration
 public class MyBatisConfig implements MetaObjectHandler {
+    @Autowired
+    @Lazy
+    private IUserService userService;
 
     // MyBatis-Plus 分页插件配置
     @Bean
@@ -31,14 +38,25 @@ public class MyBatisConfig implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         metaObject.setValue("createTime", new Date());
-        metaObject.setValue("createBy", UserContext.getUserId().toString());
         metaObject.setValue("updateTime", new Date());
-        metaObject.setValue("updateBy",UserContext.getUserId().toString());
+
+        Long userId = UserContext.getUserId();
+        // 注册登录等操作无需token（userId）
+        if(userId != null){
+            UserVo user = userService.getUserInfoById(userId);
+            metaObject.setValue("createBy",user.getNickname());
+            metaObject.setValue("updateBy",user.getNickname());
+        }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         metaObject.setValue("updateTime",new Date());
-        metaObject.setValue("updateBy",UserContext.getUserId().toString());
+        Long userId = UserContext.getUserId();
+        // 注册登录等操作无需token（userId）
+        if(userId != null){
+            UserVo user = userService.getUserInfoById(userId);
+            metaObject.setValue("updateBy",user.getNickname());
+        }
     }
 }

@@ -54,6 +54,7 @@ public class CodeGenerator {
          strategyConfig.setLogicDeleteFieldName("del_flag");  //设置逻辑删除字段名
         strategyConfig.setEntityLombokModel(true);  //设置是否启用lombok
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);      // 下划线转驼峰命名
+        strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         generator.setStrategy(strategyConfig);
 
         generator.execute();

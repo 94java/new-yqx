@@ -19,7 +19,11 @@ public enum ResultCodeEnum {
     LOGIN_FAILED(4011, "登录失败，用户名或密码不正确"),
 
     DOUBLE_USERNAME(403,"用户名已经存在"),
-    DOUBLE_PARAMS(4033,"数据已经存在");
+    DOUBLE_PARAMS(4033,"数据已经存在"),
+
+    FILE_UPLOAD_FAILED(5002, "文件上传失败"),
+
+    FILE_DELETE_FAILED(5003, "文件删除失败"), FILE_NOT_FOUND(4004, "文件不存在");
 
     private Integer code;
 

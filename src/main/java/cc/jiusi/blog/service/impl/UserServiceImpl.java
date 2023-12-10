@@ -6,7 +6,7 @@ import cc.jiusi.blog.common.res.ResultCodeEnum;
 import cc.jiusi.blog.common.utils.EmailUtil;
 import cc.jiusi.blog.common.utils.IpUtil;
 import cc.jiusi.blog.common.utils.PasswordEncoder;
-import cc.jiusi.blog.entity.User;
+import cc.jiusi.blog.entity.po.User;
 import cc.jiusi.blog.entity.dto.LoginDto;
 import cc.jiusi.blog.entity.vo.UserVo;
 import cc.jiusi.blog.exception.GlobalException;
@@ -154,7 +154,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @description: 邮箱快捷登录
      */
     @Override
-    public String loginByEmail(LoginDto loginDto,HttpServletRequest request) {
+    public String loginByEmail(LoginDto loginDto, HttpServletRequest request) {
         // 参数校验
         if (StringUtils.isEmpty(loginDto.getEmail()) || StringUtils.isEmpty(loginDto.getCode())) {
             throw new GlobalException(ResultCodeEnum.PARAMS_FAILED);
@@ -268,7 +268,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private User fillDefault(User user) {
         // 随机用户名
         if (StringUtils.isEmpty(user.getNickname())) {
-            user.setNickname("yqx_" + RandomUtil.randomString(4));
+            user.setNickname(UserConstants.DEFAULT_NICKNAME_PREFIX + RandomUtil.randomString(4));
         }
         // 默认性别
         if (StringUtils.isEmpty(user.getSex())) {
@@ -288,7 +288,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         // 默认密码
         if (StringUtils.isEmpty(user.getPassword())) {
-            String pwd = RandomUtil.randomNumbers(6);
+            String pwd = RandomUtil.randomNumbers(UserConstants.DEFAULT_PASSWORD_LENGTH);
             user.setPassword(passwordEncoder.encode(pwd));
         }
         return user;

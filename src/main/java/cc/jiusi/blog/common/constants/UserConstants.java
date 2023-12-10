@@ -27,4 +27,10 @@ public class UserConstants {
 
     // 未删除状态
     public static final String DEL_NO = "0";
+
+    // 默认用户昵称前缀
+    public static final String DEFAULT_NICKNAME_PREFIX = "94blog_";
+
+    // 默认密码长度
+    public static final int DEFAULT_PASSWORD_LENGTH = 6;
 }

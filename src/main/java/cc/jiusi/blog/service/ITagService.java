@@ -1,6 +1,7 @@
 package cc.jiusi.blog.service;
 
-import cc.jiusi.blog.entity.Tag;
+import cc.jiusi.blog.entity.dto.TagDto;
+import cc.jiusi.blog.entity.po.Tag;
 import cc.jiusi.blog.entity.vo.TagVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -61,5 +62,7 @@ public interface ITagService extends IService<Tag> {
      * @return: void
      * @description: 批量删除标签
      */
-    void removeTags(List<Long> ids);
+    void removeTags(List<String> ids);
+
+    Page<TagVo> selectPage(TagDto tagDto);
 }

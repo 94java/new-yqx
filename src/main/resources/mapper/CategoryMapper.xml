@@ -3,7 +3,7 @@
 <mapper namespace="cc.jiusi.blog.mapper.CategoryMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.Category">
+    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.po.Category">
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="short_name" property="shortName" />

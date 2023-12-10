@@ -1,6 +1,6 @@
 package cc.jiusi.blog.service;
 
-import cc.jiusi.blog.entity.po.Article;
+import cc.jiusi.blog.entity.po.Source;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 九思.
  * @since 2023-11-23
  */
-public interface IArticleService extends IService<Article> {
+public interface ISourceService extends IService<Source> {
 
 }

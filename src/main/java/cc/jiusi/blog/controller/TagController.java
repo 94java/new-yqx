@@ -2,7 +2,7 @@ package cc.jiusi.blog.controller;
 
 
 import cc.jiusi.blog.common.res.Result;
-import cc.jiusi.blog.entity.Tag;
+import cc.jiusi.blog.entity.dto.TagDto;
 import cc.jiusi.blog.entity.vo.TagVo;
 import cc.jiusi.blog.service.ITagService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -36,33 +36,30 @@ public class TagController {
     }
 
     @ApiOperation("查询标签列表")
-    @GetMapping("/{pageNum}/{pageSize}")
-    public Result<Page<TagVo>> list(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
-        // 规范参数
-        pageNum = pageNum == null? 1 : pageNum;
-        pageSize = pageSize == null? 10 : pageSize;
+    @PostMapping("/list")
+    public Result<Page<TagVo>> list(@RequestBody TagDto tagDto) {
         // 查询
-        Page<TagVo> page = tagService.list(pageNum,pageSize);
+        Page<TagVo> page = tagService.selectPage(tagDto);
         return Result.success(page);
     }
 
     @ApiOperation("新增标签")
-    @PostMapping
+    @PostMapping("/add")
     public Result save(@RequestBody TagVo tag) {
         tagService.saveTag(tag);
         return Result.success();
     }
 
     @ApiOperation("修改标签")
-    @PutMapping
+    @PostMapping("/edit")
     public Result update(@RequestBody TagVo tag) {
         tagService.updateTag(tag);
         return Result.success();
     }
 
     @ApiOperation("删除标签")
-    @DeleteMapping
-    public Result delete(@RequestBody List<Long> ids) {
+    @PostMapping("/delete")
+    public Result delete(@RequestBody List<String> ids) {
         tagService.removeTags(ids);
         return Result.success();
     }

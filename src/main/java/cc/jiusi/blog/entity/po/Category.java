@@ -1,5 +1,6 @@
-package cc.jiusi.blog.entity;
+package cc.jiusi.blog.entity.po;
 
+import cc.jiusi.blog.entity.BaseBean;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -23,14 +24,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="分类对象", description="")
-public class Category implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "id")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-
+public class Category extends BaseBean {
     @ApiModelProperty(value = "分类名")
     @TableField(value = "`name`")
     private String name;
@@ -44,22 +38,5 @@ public class Category implements Serializable {
     @ApiModelProperty(value = "排序（越小越前）")
     @TableField(value = "`order`")
     private Integer order;
-
-    @ApiModelProperty(value = "创建者")
-    private String createBy;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "更新者")
-    private String updateBy;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
-
-    @ApiModelProperty(value = "删除标志")
-    @TableLogic
-    private String delFlag;
-
 
 }

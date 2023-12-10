@@ -3,12 +3,11 @@
 <mapper namespace="cc.jiusi.blog.mapper.ArticleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.Article">
+    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.po.Article">
         <id column="id" property="id" />
         <result column="uid" property="uid" />
         <result column="title" property="title" />
         <result column="img" property="img" />
-        <result column="content" property="content" />
         <result column="type" property="type" />
         <result column="remark" property="remark" />
         <result column="status" property="status" />
@@ -22,11 +21,13 @@
         <result column="likes" property="likes" />
         <result column="stars" property="stars" />
         <result column="comments" property="comments" />
+        <result column="img_type" property="imgType" />
+        <result column="comments_status" property="commentsStatus" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, uid, title, img, content, type, remark, status, sort_id, browse, create_by, create_time, update_by, update_time, del_flag, likes, stars, comments
+        id, uid, title, img, type, remark, status, sort_id, browse, create_by, create_time, update_by, update_time, del_flag, likes, stars, comments, img_type, comments_status
     </sql>
 
 </mapper>

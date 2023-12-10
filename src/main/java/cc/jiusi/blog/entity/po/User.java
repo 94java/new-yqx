@@ -1,5 +1,6 @@
-package cc.jiusi.blog.entity;
+package cc.jiusi.blog.entity.po;
 
+import cc.jiusi.blog.entity.BaseBean;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.util.Date;
@@ -21,13 +22,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ApiModel(value="User对象", description="")
-public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+public class User extends BaseBean {
 
     @ApiModelProperty(value = "用户名")
     private String username;
@@ -70,26 +65,5 @@ public class User implements Serializable {
 
     @ApiModelProperty(value = "最后登录ip")
     private String loginIp;
-
-    @ApiModelProperty(value = "创建者")
-    @TableField(fill = FieldFill.INSERT)
-    private String createBy;
-
-    @ApiModelProperty(value = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @ApiModelProperty(value = "修改者")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private String updateBy;
-
-    @ApiModelProperty(value = "修改时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
-
-    @ApiModelProperty(value = "逻辑删除标记")
-    @TableLogic
-    private String delFlag;
-
 
 }

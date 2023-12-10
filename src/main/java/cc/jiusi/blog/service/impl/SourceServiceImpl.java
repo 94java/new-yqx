@@ -1,8 +1,8 @@
 package cc.jiusi.blog.service.impl;
 
-import cc.jiusi.blog.entity.po.Article;
-import cc.jiusi.blog.mapper.ArticleMapper;
-import cc.jiusi.blog.service.IArticleService;
+import cc.jiusi.blog.entity.po.Source;
+import cc.jiusi.blog.mapper.SourceMapper;
+import cc.jiusi.blog.service.ISourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2023-11-23
  */
 @Service
-public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
+public class SourceServiceImpl extends ServiceImpl<SourceMapper, Source> implements ISourceService {
 
 }

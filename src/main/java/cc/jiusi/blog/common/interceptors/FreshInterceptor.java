@@ -1,5 +1,6 @@
 package cc.jiusi.blog.common.interceptors;
 
+import cc.jiusi.blog.common.constants.SysConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,7 +24,7 @@ public class FreshInterceptor implements HandlerInterceptor {
     }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("token");
+        String token = request.getHeader(SysConstants.USER_TOKEN_HEADER);
         if(StringUtils.isNotBlank(token)){
             // token 不为空
             String userId = redisTemplate.opsForValue().get(RedisConstants.LOGIN_TOKEN + token);

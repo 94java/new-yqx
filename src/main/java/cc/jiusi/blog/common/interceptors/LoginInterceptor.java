@@ -2,6 +2,7 @@ package cc.jiusi.blog.common.interceptors;
 
 import cc.jiusi.blog.common.annotations.Authentication;
 import cc.jiusi.blog.common.constants.RedisConstants;
+import cc.jiusi.blog.common.constants.SysConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -48,7 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // ===========需要鉴权认证===========
         // 获取token
-        String token = request.getHeader("token");
+        String token = request.getHeader(SysConstants.USER_TOKEN_HEADER);
         if(StringUtils.isBlank(token)){
             // 不包含token，拦截
             response.setStatus(401);

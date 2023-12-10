@@ -3,7 +3,7 @@
 <mapper namespace="cc.jiusi.blog.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.User">
+    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.po.User">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="password" property="password" />

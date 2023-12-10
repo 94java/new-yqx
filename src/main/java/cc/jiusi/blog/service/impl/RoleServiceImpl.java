@@ -1,6 +1,6 @@
 package cc.jiusi.blog.service.impl;
 
-import cc.jiusi.blog.entity.Role;
+import cc.jiusi.blog.entity.po.Role;
 import cc.jiusi.blog.mapper.RoleMapper;
 import cc.jiusi.blog.service.IRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

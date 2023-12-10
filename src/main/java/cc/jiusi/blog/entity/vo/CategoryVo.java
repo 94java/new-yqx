@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 public class CategoryVo {
     @ApiModelProperty(value = "id")
-    private Long id;
+    private String id;
 
     @ApiModelProperty(value = "分类名")
     private String name;

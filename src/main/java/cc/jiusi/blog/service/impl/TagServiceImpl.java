@@ -1,11 +1,14 @@
 package cc.jiusi.blog.service.impl;
 
 import cc.jiusi.blog.common.res.ResultCodeEnum;
-import cc.jiusi.blog.entity.Tag;
+import cc.jiusi.blog.entity.dto.TagDto;
+import cc.jiusi.blog.entity.po.Tag;
 import cc.jiusi.blog.entity.vo.TagVo;
 import cc.jiusi.blog.exception.GlobalException;
 import cc.jiusi.blog.mapper.TagMapper;
 import cc.jiusi.blog.service.ITagService;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.pinyin.PinyinUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -16,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -155,13 +159,13 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
         BeanUtils.copyProperties(tagVo, tag);
         // 重复性校验
         LambdaQueryWrapper<Tag> wrapper = Wrappers.<Tag>lambdaQuery()
-               .eq(Tag::getName, tagVo.getName())
-                .ne(Tag::getId,tagVo.getId())
+                .eq(Tag::getName, tagVo.getName())
+                .ne(Tag::getId, tagVo.getId())
                 .or()
                 .eq(Tag::getShortName, tagVo.getShortName())
-                .ne(Tag::getId,tagVo.getId());
+                .ne(Tag::getId, tagVo.getId());
         Integer count = tagMapper.selectCount(wrapper);
-        if(count > 0){
+        if (count > 0) {
             throw new GlobalException(ResultCodeEnum.DOUBLE_PARAMS, "标签名或缩略名已存在");
         }
         tagMapper.updateById(tag);
@@ -175,11 +179,45 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
      * @description: 批量删除标签
      */
     @Override
-    public void removeTags(List<Long> ids) {
+    public void removeTags(List<String> ids) {
         // TODO 标签下有文章内容时删除失败
         ids.forEach(id -> {
             tagMapper.deleteById(id);
         });
+    }
+
+    @Override
+    public Page<TagVo> selectPage(TagDto tagDto) {
+        // 获取分页参数
+        long pageNum = tagDto.getPageNum() == null ? 1L : tagDto.getPageNum();
+        long pageSize = tagDto.getPageSize() == null ? 10L : tagDto.getPageSize();
+        // 查询标签
+        Page<Tag> page = new Page<>(pageNum, pageSize);
+        // 构造查询条件
+        LambdaQueryWrapper<Tag> wrapper = Wrappers.<Tag>lambdaQuery();
+        String name = tagDto.getName();
+        String createBy = tagDto.getCreateBy();
+        Date[] createTime = tagDto.getCreateTime();
+        wrapper.like(name != null, Tag::getName, name)
+                .like(createBy != null, Tag::getCreateBy, createBy);
+        if (createTime != null) {
+            wrapper.ge(createTime[0] != null, Tag::getCreateTime, createTime[0])
+                    .le(createTime[1] != null, Tag::getCreateTime, createTime[1]);
+        }
+
+        tagMapper.selectPage(page, wrapper);
+        // 构造结果 Page
+        Page<TagVo> voPage = new Page<>();
+        BeanUtils.copyProperties(page, voPage);
+        // 拷贝 records
+        List<TagVo> records = page.getRecords().stream().map(tag -> {
+            TagVo tagVo = new TagVo();
+            BeanUtils.copyProperties(tag, tagVo);
+            return tagVo;
+        }).collect(Collectors.toList());
+        voPage.setRecords(records);
+
+        return voPage;
     }
 
     /**
