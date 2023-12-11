@@ -33,10 +33,18 @@ public class Category extends BaseBean {
     private String shortName;
 
     @ApiModelProperty(value = "父级分类（-1为顶级分类）")
-    private Long parentId;
+    private String parentId;
 
     @ApiModelProperty(value = "排序（越小越前）")
     @TableField(value = "`order`")
     private Integer order;
+
+    @ApiModelProperty(value = "分类图标")
+    @TableField(value = "`icon`")
+    private String icon;
+
+    @ApiModelProperty(value = "分类状态")
+    @TableField(value = "`status`")
+    private String status;
 
 }

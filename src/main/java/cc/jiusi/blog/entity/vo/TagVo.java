@@ -3,8 +3,10 @@ package cc.jiusi.blog.entity.vo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -14,8 +16,10 @@ import java.util.Date;
  * @CreateTime: 2023-11-17  16:15
  * @Description: TODO
  */
+
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class TagVo {
+public class TagVo extends BaseVo{
     @ApiModelProperty(value = "主键")
     private String id;
 
@@ -24,17 +28,5 @@ public class TagVo {
 
     @ApiModelProperty(value = "缩略名")
     private String shortName;
-
-    @ApiModelProperty(value = "创建者")
-    private String createBy;
-
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    @ApiModelProperty(value = "更新者")
-    private String updateBy;
-
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
 
 }

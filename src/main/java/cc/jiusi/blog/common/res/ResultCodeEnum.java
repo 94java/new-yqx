@@ -23,7 +23,10 @@ public enum ResultCodeEnum {
 
     FILE_UPLOAD_FAILED(5002, "文件上传失败"),
 
-    FILE_DELETE_FAILED(5003, "文件删除失败"), FILE_NOT_FOUND(4004, "文件不存在");
+    FILE_DELETE_FAILED(5003, "文件删除失败"),
+    FILE_NOT_FOUND(4004, "文件不存在"),
+    CATEGORY_DELETE_FAILED(5004, "该分类下还关联有子分类，无法删除"),
+    ;
 
     private Integer code;
 

@@ -2,6 +2,7 @@ package cc.jiusi.blog.controller;
 
 
 import cc.jiusi.blog.common.res.Result;
+import cc.jiusi.blog.entity.dto.CategoryDto;
 import cc.jiusi.blog.entity.vo.CategoryVo;
 import cc.jiusi.blog.service.ICategoryService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,11 +11,13 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author 九思.
@@ -29,39 +32,46 @@ public class CategoryController {
 
     @ApiOperation("查询分类详情")
     @GetMapping("/{id}")
-    public Result<CategoryVo> info(@PathVariable Long id){
+    public Result<CategoryVo> info(@PathVariable Long id) {
         CategoryVo categoryVo = categoryService.findById(id);
         return Result.success(categoryVo);
     }
 
-    @ApiOperation("查询分类列表")
+    @ApiOperation("分页查询分类")
     @GetMapping("/{pageNum}/{pageSize}")
-    public Result<Page<CategoryVo>> list(@PathVariable Integer pageNum, @PathVariable Integer pageSize){
+    public Result<Page<CategoryVo>> list(@PathVariable Integer pageNum, @PathVariable Integer pageSize) {
         // 规范参数
-        pageNum = pageNum == null? 1 : pageNum;
-        pageSize = pageSize == null? 10 : pageSize;
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
 
         Page<CategoryVo> page = categoryService.list(pageNum, pageSize);
         return Result.success(page);
     }
 
+    @ApiOperation("查询分类树结构")
+    @PostMapping("/tree")
+    public Result<List<CategoryVo>> tree(@RequestBody CategoryDto categoryDto) {
+        List<CategoryVo> list = categoryService.selectTreeList(categoryDto);
+        return Result.success(list);
+    }
+
     @ApiOperation("新增分类")
-    @PostMapping
-    public Result save(@RequestBody CategoryVo categoryVo) {
+    @PostMapping("/add")
+    public Result<Void> save(@RequestBody CategoryVo categoryVo) {
         categoryService.saveCategory(categoryVo);
         return Result.success();
     }
 
     @ApiOperation("修改分类")
-    @PutMapping
-    public Result update(@RequestBody CategoryVo categoryVo) {
+    @PostMapping("/edit")
+    public Result<Void> update(@RequestBody CategoryVo categoryVo) {
         categoryService.updateCategory(categoryVo);
         return Result.success();
     }
 
     @ApiOperation("批量删除分类")
-    @DeleteMapping
-    public Result delete(@RequestBody List<Long> ids) {
+    @PostMapping("/delete")
+    public Result<Void> delete(@RequestBody List<Long> ids) {
         categoryService.removeCategorys(ids);
         return Result.success();
     }

@@ -1,5 +1,6 @@
 package cc.jiusi.blog.service;
 
+import cc.jiusi.blog.entity.dto.CategoryDto;
 import cc.jiusi.blog.entity.po.Category;
 import cc.jiusi.blog.entity.vo.CategoryVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -35,6 +36,15 @@ public interface ICategoryService extends IService<Category> {
      * @description: 分页查询分类
      */
     Page<CategoryVo> list(Integer pageNum, Integer pageSize);
+
+    /**
+     * @author: 九思.
+     * @date: 2023/11/17 20:07
+     * @param:  Long> ids
+     * @return: void
+     * @description: 查询分类列表（树结构）
+     */
+    List<CategoryVo> selectTreeList(CategoryDto categoryDto);
 
     /**
      * @author: 九思.
