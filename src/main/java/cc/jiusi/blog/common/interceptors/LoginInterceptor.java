@@ -63,7 +63,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         // 保存用户id
-        UserContext.setUserId(Long.valueOf(userId));
+        UserContext.setUserId(userId);
         // 放行
         return true;
     }

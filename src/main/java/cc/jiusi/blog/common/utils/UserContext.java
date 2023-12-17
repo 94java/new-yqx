@@ -7,15 +7,15 @@ package cc.jiusi.blog.common.utils;
  * @Description: TODO
  */
 public class UserContext {
-    public static final ThreadLocal<Long> local = new ThreadLocal<>();
+    public static final ThreadLocal<String> local = new ThreadLocal<>();
 
     // 获取用户id
-    public static Long getUserId() {
+    public static String getUserId() {
         return local.get();
     }
 
     // 设置用户id
-    public static void setUserId(Long userId) {
+    public static void setUserId(String userId) {
         local.set(userId);
     }
 

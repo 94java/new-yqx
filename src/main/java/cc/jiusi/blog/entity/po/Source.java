@@ -38,7 +38,7 @@ public class Source extends BaseBean {
     private String md5;
 
     @ApiModelProperty(value = "所属用户id")
-    private Long uid;
+    private String uid;
 
     @ApiModelProperty(value = "素材真实名（存放在minio 中的命名）")
     private String realName;

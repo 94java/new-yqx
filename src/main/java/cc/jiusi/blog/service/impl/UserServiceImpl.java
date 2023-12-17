@@ -50,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private StringRedisTemplate redisTemplate;
 
     @Override
-    public UserVo getUserInfoById(Long id) {
+    public UserVo getUserInfoById(String id) {
         return getSafeUser(userMapper.selectById(id));
     }
 

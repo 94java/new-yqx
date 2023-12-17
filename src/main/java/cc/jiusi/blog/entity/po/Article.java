@@ -25,7 +25,7 @@ import java.util.Date;
 @ApiModel(value="Article对象", description="")
 public class Article extends BaseBean {
     @ApiModelProperty(value = "作者id")
-    private Long uid;
+    private String uid;
 
     @ApiModelProperty(value = "标题")
     private String title;
@@ -33,13 +33,13 @@ public class Article extends BaseBean {
     @ApiModelProperty(value = "封面图")
     private String img;
 
-    @ApiModelProperty(value = "类型（原创、转载、翻译）")
-    private String type;
+    @ApiModelProperty(value = "可见性（隐藏、公开）")
+    private String visibility;
 
     @ApiModelProperty(value = "摘要")
     private String remark;
 
-    @ApiModelProperty(value = "状态（公开、隐藏、私密等）")
+    @ApiModelProperty(value = "状态（草稿、已发布）")
     private String status;
 
     @ApiModelProperty(value = "分类id")

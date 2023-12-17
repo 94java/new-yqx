@@ -30,7 +30,7 @@ public class FreshInterceptor implements HandlerInterceptor {
             String userId = redisTemplate.opsForValue().get(RedisConstants.LOGIN_TOKEN + token);
             if(StringUtils.isNotBlank(userId)){
                 // 存在 token
-                UserContext.setUserId(Long.valueOf(userId));
+                UserContext.setUserId(userId);
                 // 刷新过期时间 (30 minutes)
                 redisTemplate.expire(RedisConstants.LOGIN_TOKEN + token, 30, TimeUnit.MINUTES);
 

@@ -25,7 +25,7 @@ public interface IUserService extends IService<User> {
      * @return: top.hellocode.entity.User
      * @description: 获取单个用户信息
      */
-    public UserVo getUserInfoById(Long id);
+    public UserVo getUserInfoById(String id);
 
     public Page<User> list(Integer pageNum, Integer pageSize, UserSearchDto user);
 

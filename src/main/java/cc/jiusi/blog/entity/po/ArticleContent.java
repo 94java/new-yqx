@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author 九思.
@@ -20,8 +20,16 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(value="ArticleContent对象", description="")
-public class ArticleContent extends BaseBean {
+@ApiModel(value = "ArticleContent对象", description = "")
+public class ArticleContent {
+
+    @ApiModelProperty(value = "主键ID")
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    protected String id;
+
+    @ApiModelProperty(value = "文章id")
+    private String articleId;
+
     @ApiModelProperty(value = "文章内容")
     private String articleContent;
 

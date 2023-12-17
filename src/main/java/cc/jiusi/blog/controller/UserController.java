@@ -43,7 +43,7 @@ public class UserController {
     @GetMapping("/{id}")
     @ApiOperation("获取用户详细信息")
     // @Authentication
-    public Result<UserVo> info(@PathVariable("id") Long id) {
+    public Result<UserVo> info(@PathVariable("id") String id) {
         UserVo user = userService.getUserInfoById(id);
         return Result.success(user);
     }
@@ -52,7 +52,7 @@ public class UserController {
     @ApiOperation("获取当前登录用户信息")
     @Authentication
     public Result<UserVo> currentUserInfo() {
-        Long userId = UserContext.getUserId();
+        String userId = UserContext.getUserId();
         UserVo user = userService.getUserInfoById(userId);
         return Result.success(user);
     }

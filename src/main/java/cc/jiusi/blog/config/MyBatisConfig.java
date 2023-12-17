@@ -2,6 +2,7 @@ package cc.jiusi.blog.config;
 
 import cc.jiusi.blog.entity.vo.UserVo;
 import cc.jiusi.blog.service.IUserService;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -40,9 +41,9 @@ public class MyBatisConfig implements MetaObjectHandler {
         metaObject.setValue("createTime", new Date());
         metaObject.setValue("updateTime", new Date());
 
-        Long userId = UserContext.getUserId();
+        String userId = UserContext.getUserId();
         // 注册登录等操作无需token（userId）
-        if(userId != null){
+        if(StrUtil.isNotBlank(userId)){
             UserVo user = userService.getUserInfoById(userId);
             metaObject.setValue("createBy",user.getNickname());
             metaObject.setValue("updateBy",user.getNickname());
@@ -52,9 +53,9 @@ public class MyBatisConfig implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         metaObject.setValue("updateTime",new Date());
-        Long userId = UserContext.getUserId();
+        String userId = UserContext.getUserId();
         // 注册登录等操作无需token（userId）
-        if(userId != null){
+        if(StrUtil.isNotBlank(userId)){
             UserVo user = userService.getUserInfoById(userId);
             metaObject.setValue("updateBy",user.getNickname());
         }
