@@ -2,8 +2,12 @@ package cc.jiusi.blog.service;
 
 import cc.jiusi.blog.entity.dto.ArticleDto;
 import cc.jiusi.blog.entity.po.Article;
+import cc.jiusi.blog.entity.vo.ArticleVo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -23,5 +27,33 @@ public interface IArticleService extends IService<Article> {
      * @description: 保存文章内容
      */
     @Transactional
-    void saveArticle(ArticleDto articleDto);
+    String saveArticle(ArticleDto articleDto);
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/23 15:46
+     * @param:  ArticleDto articleDto
+     * @return: ArticleVo
+     * @description: 获取文章详情
+     */
+    ArticleVo getArticleDetail(ArticleDto articleDto);
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/23 15:46
+     * @param:  ArticleDto articleDto
+     * @return: ArticleVo
+     * @description: 修改文章信息（不包含内容）
+     */
+    @Transactional
+    void updateArticle(ArticleDto articleDto);
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/23 15:46
+     * @param:  ArticleDto articleDto
+     * @return: ArticleVo
+     * @description: 获取文章分页列表
+     */
+    Page<ArticleVo> getArticlePageList(ArticleDto articleDto);
 }

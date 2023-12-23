@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.jiusi.blog.mapper.ArticleContentMapper">
+<mapper namespace="cc.jiusi.blog.mapper.ArticleTagMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.po.ArticleContent">
+    <resultMap id="BaseResultMap" type="cc.jiusi.blog.entity.po.ArticleTag">
         <id column="id" property="id" />
         <result column="article_id" property="articleId" />
-        <result column="article_content" property="articleContent" />
+        <result column="tag_id" property="tagId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id,article_id, article_content
+        id, article_id, tag_id
     </sql>
 
 </mapper>

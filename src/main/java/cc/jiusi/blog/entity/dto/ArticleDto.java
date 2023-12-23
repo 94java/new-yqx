@@ -1,10 +1,14 @@
 package cc.jiusi.blog.entity.dto;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @blog: <a href="https://www.jiusi.cc">九思_Java之路</a>
@@ -12,8 +16,9 @@ import java.util.Date;
  * @CreateTime: 2023-12-10  16:35
  * @Description: 文章传输对象
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class ArticleDto {
+public class ArticleDto extends PageQueryDto{
     /**
      * @author: 九思.
      * @date: 2023/12/10 16:37
@@ -68,7 +73,14 @@ public class ArticleDto {
      * @date: 2023/12/17 12:38
      * @description: 分类id
      */
-    private Long sortId;
+    private String sortId;
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/17 12:38
+     * @description: 标签id
+     */
+    private List<String> tagIds;
 
     /**
      * @author: 九思.
@@ -118,5 +130,23 @@ public class ArticleDto {
      * @description: 文章内容（markdown格式）
      */
     private String articleContent;
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/17 12:38
+     * @description: 创建时间
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+    private Date createTime;
+
+    private Date[] createTimes;
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/17 12:38
+     * @description: 修改时间
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+    private Date updateTime;
 
 }

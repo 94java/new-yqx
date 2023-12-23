@@ -7,8 +7,6 @@ import cc.jiusi.blog.entity.vo.TagVo;
 import cc.jiusi.blog.exception.GlobalException;
 import cc.jiusi.blog.mapper.TagMapper;
 import cc.jiusi.blog.service.ITagService;
-import cn.hutool.core.date.DateUnit;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.pinyin.PinyinUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -101,7 +99,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
      * @description: 新增标签
      */
     @Override
-    public void saveTag(TagVo tag) {
+    public String saveTag(TagVo tag) {
         String name = tag.getName();
         String shortName = tag.getShortName();
         // 参数校验
@@ -135,6 +133,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
         newTag.setName(name);
         newTag.setShortName(shortName);
         tagMapper.insert(newTag);
+        return newTag.getId();
     }
 
     @Override

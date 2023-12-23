@@ -43,7 +43,8 @@ public class Article extends BaseBean {
     private String status;
 
     @ApiModelProperty(value = "分类id")
-    private Long sortId;
+    // TODO： 更改为 categoryId
+    private String sortId;
 
     @ApiModelProperty(value = "浏览量")
     private String browse;

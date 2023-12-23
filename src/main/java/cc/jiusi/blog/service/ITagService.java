@@ -40,11 +40,11 @@ public interface ITagService extends IService<Tag> {
     /**
      * @author: 九思.
      * @date: 2023/11/17 16:55
-     * @param:  TagVo tag
+     * @param: TagVo tag
      * @return: void
      * @description: 新增标签
      */
-    void saveTag(TagVo tag);
+    String saveTag(TagVo tag);
 
     /**
      * @author: 九思.
