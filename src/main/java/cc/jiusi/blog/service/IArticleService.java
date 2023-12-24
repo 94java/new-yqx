@@ -56,4 +56,13 @@ public interface IArticleService extends IService<Article> {
      * @description: 获取文章分页列表
      */
     Page<ArticleVo> getArticlePageList(ArticleDto articleDto);
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/24 10:59
+     * @param:  ArticleDto articleDto
+     * @return: void
+     * @description: 发布文章
+     */
+    void publishArticle(ArticleDto articleDto);
 }

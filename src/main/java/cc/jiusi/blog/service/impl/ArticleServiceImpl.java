@@ -269,6 +269,30 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     /**
+     * @param articleDto
+     * @author: 九思.
+     * @date: 2023/12/24 10:59
+     * @param: ArticleDto articleDto
+     * @return: void
+     * @description: 发布文章
+     */
+    @Override
+    public void publishArticle(ArticleDto articleDto) {
+        // todo： 文章图片转存
+        // todo: es搜索引擎入库
+        // todo：静态页面生成，提高访问速度（待定）
+        // 更改文章状态
+        String articleDtoId = articleDto.getId();
+        if (StrUtil.isEmpty(articleDtoId)) {
+            return;
+        }
+        ArticleDto dto = new ArticleDto();
+        dto.setId(articleDto.getId());
+        dto.setStatus(ArticleConstants.ARTICLE_STATUS_RELEASE);
+        this.updateArticle(dto);
+    }
+
+    /**
      * @author: 九思.
      * @date: 2023/12/17 12:57
      * @param: Article article

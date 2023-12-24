@@ -68,6 +68,18 @@ public class ArticleController {
      * @author: 九思.
      * @date: 2023/12/17 12:36
      * @return: Result
+     * @description: 文章发布
+     */
+    @RequestMapping("/publish")
+    public Result<Void> publish(@RequestBody ArticleDto articleDto) {
+        articleService.publishArticle(articleDto);
+        return Result.success();
+    }
+
+    /**
+     * @author: 九思.
+     * @date: 2023/12/17 12:36
+     * @return: Result
      * @description: 修改文章/文章设置
      */
     @RequestMapping("/edit")
