@@ -1,6 +1,10 @@
 package cc.jiusi.blog.service;
 
+import cc.jiusi.blog.common.res.Result;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @blog: <a href="https://www.jiusi.cc">九思_Java之路</a>
@@ -27,4 +31,6 @@ public interface IFileService {
      * @description: 删除文件
      */
     void delete(Long id);
+
+    List<Map<String,String>> getFileList();
 }

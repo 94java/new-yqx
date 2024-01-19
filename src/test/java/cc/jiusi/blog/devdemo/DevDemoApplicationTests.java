@@ -4,10 +4,14 @@ import cc.jiusi.blog.common.res.ResultCodeEnum;
 import cc.jiusi.blog.common.utils.MinioUtils;
 import cc.jiusi.blog.common.utils.PasswordEncoder;
 import cc.jiusi.blog.exception.GlobalException;
+import cn.hutool.Hutool;
+import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.pinyin.PinyinUtil;
 import io.github.biezhi.ome.OhMyEmail;
+import io.minio.Result;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
+import io.minio.messages.Item;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
@@ -96,5 +101,33 @@ class DevDemoApplicationTests {
         System.out.println(bs);
         // 获取对象访问路径
         System.out.println(minioUtils.getObjectUrl("94blog","qq.jpg"));
+    }
+
+    /**
+     * @author: 九思.
+     * @date: 2024/1/19 20:22
+     * @param:  MinioUtils minioUtils
+     * @return: void
+     * @description: 获取 Minio 文件列表
+     */
+    @Test
+    public void testGetMinioList(@Autowired MinioUtils minioUtils) throws ServerException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, XmlParserException, InvalidResponseException, InternalException {
+        Iterable<Result<Item>> results = minioUtils.listObjects("94blog");
+        results.forEach(item -> {
+            String name = null;
+            String etag = null;
+            String url = null;
+            try {
+                name = item.get().objectName();
+                etag = item.get().etag();
+                name = URLUtil.decode(name);
+                url = minioUtils.getObjectUrl("94blog",name);
+            } catch (ErrorResponseException | InsufficientDataException | InternalException |
+                     InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException |
+                     NoSuchAlgorithmException | ServerException | XmlParserException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(name + "===" + etag + "===" + url);
+        });
     }
 }

@@ -18,11 +18,25 @@ import springfox.documentation.annotations.ApiIgnore;
  * @Description: 文件控制器
  */
 @RestController
-@RequestMapping("/upload")
-@Api(tags = "文件上传")
+@RequestMapping("/resource")
+@Api(tags = "素材库管理")
 public class FileController {
     @Autowired
     private IFileService fileService;
+
+
+    /**
+     * @author: 九思.
+     * @date: 2024/1/19 20:52
+     * @param:
+     * @return: Result
+     * @description: 获取文件列表
+     */
+    @PostMapping("/list")
+    @ApiOperation("获取文件列表")
+    public Result list(){
+        return Result.success(fileService.getFileList());
+    }
 
     /**
      * @author: 九思.
@@ -31,7 +45,7 @@ public class FileController {
      * @return: Result
      * @description: 文件上传
      */
-    @PostMapping
+    @PostMapping("/upload")
     @ApiOperation("上传文件")
     public Result upload(MultipartFile file){
         fileService.upload(file);
